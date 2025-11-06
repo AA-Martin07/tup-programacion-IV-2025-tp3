@@ -1,0 +1,22 @@
+@url=http://localhost:3000
+
+POST {{url}}/usuarios
+Content-Type: application/json
+
+{
+    "username": "ElpepeEtesech",
+    "nombre": "Pepe Argento",
+    "password": "Tutifrutti01"
+}
+### Crear Usuario
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "pepe12",
+    "password": "hola1234"
+}
+###
+GET {{url}}/usuarios
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsInJvbGVzIjpbImFkbWluIl0sImlhdCI6MTc2MjM5MDEwOSwiZXhwIjoxNzYyNDA0NTA5fQ.y53D9bGucYrp8Apd0xzCIeksyzvmQTlEsFtIcAnBzyg
