@@ -7,14 +7,14 @@ const router = express.Router();
 
 router.post(
   "/login",
-  body("username").isAlphanumeric("es-ES").isLength({ max: 20 }),
-  body("password").isStrongPassword({
+  body("email").isEmail().normalizeEmail().trim(),
+  body("password").notEmpty().isStrongPassword({
     minLength: 8,
     minLowercase: 1,
     minUppercase: 0,
     minNumbers: 1,
     minSymbols: 0,
-  }),
+  }).trim(),
   verificarValidaciones,
   login
 );

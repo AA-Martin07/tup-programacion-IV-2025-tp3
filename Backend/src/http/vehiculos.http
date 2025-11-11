@@ -1,0 +1,56 @@
+@url=http://localhost:3000
+
+### login
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "jose123@gmail.com",
+  "password": "Tutifrutti007"
+}
+
+###
+@token = {{login.response.body.token}}
+
+###
+POST {{url}}/vehiculos/registro
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "marca": "Fiat",
+  "modelo": "Cronos",
+  "patente": "PC678JW",
+  "año": 2024,
+  "capacidad": 4
+}
+
+###
+GET {{url}}/vehiculos  
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET {{url}}/vehiculos/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+PUT {{url}}/vehiculos/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "marca": "chevrolet",
+  "modelo": "onix",
+  "patente": "BND678",
+  "año": 2022,
+  "capacidad": 4
+}
+
+###
+GET {{url}}/vehiculos/historial
+Content-Type: application/json
+Authorization: Bearer {{token}}

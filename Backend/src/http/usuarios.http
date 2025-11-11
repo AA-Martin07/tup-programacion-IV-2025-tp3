@@ -4,19 +4,38 @@ POST {{url}}/usuarios
 Content-Type: application/json
 
 {
-    "username": "ElpepeEtesech",
-    "nombre": "Pepe Argento",
-    "password": "Tutifrutti01"
+  "nombre": "jose",
+  "email": "jose123@gmail.com",
+  "password": "Tutifrutti007"
 }
-### Crear Usuario
+### login
+# @name login
 POST {{url}}/auth/login
 Content-Type: application/json
 
 {
-    "username": "pepe12",
-    "password": "hola1234"
+  "email": "jose123@gmail.com",
+  "password": "Tutifrutti007"
 }
+
+###
+@token = {{login.response.body.token}}
+
 ###
 GET {{url}}/usuarios
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsInJvbGVzIjpbImFkbWluIl0sImlhdCI6MTc2MjM5MDEwOSwiZXhwIjoxNzYyNDA0NTA5fQ.y53D9bGucYrp8Apd0xzCIeksyzvmQTlEsFtIcAnBzyg
+Authorization: Bearer {{token}}
+
+###
+PUT {{url}}/usuarios/9
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nombre": "Jose Argento",
+  "password": "Tutifrutti007"
+}
+
+###
+DELETE {{url}}/usuarios/8
+Authorization: Bearer {{token}}

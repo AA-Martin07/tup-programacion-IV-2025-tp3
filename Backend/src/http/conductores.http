@@ -1,0 +1,56 @@
+@url=http://localhost:3000
+
+
+### login
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "jose123@gmail.com",
+  "password": "Tutifrutti007"
+}
+
+###
+@token = {{login.response.body.token}}
+
+###
+POST {{url}}/conductores/registro
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nombre": "cacho",
+  "apellido": "taxista",
+  "dni": "40345678",
+  "licencia": "LNC-42892834",
+  "vencimiento_licencia": "2026-11-03"
+}
+
+###
+GET {{url}}/conductores
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET {{url}}/conductores/2
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+PUT {{url}}/conductores/2
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nombre": "cacho",
+  "apellido": "jeager",
+  "dni": "40345678",
+  "licencia": "LNC-42892834",
+  "vencimiento_licencia": "2027-01-03"
+}
+
+###
+DELETE {{url}}/conductores/3
+Content-Type: application/json
+Authorization: Bearer {{token}}

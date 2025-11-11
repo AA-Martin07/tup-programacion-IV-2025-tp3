@@ -3,15 +3,18 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const login = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   const [usuarios] = await db.execute(
-    "SELECT * FROM usuarios WHERE username=?",
-    [username]
+    "SELECT * FROM usuarios WHERE email=?",
+    [email]
   );
 
-  if (usuarios.length === 0)
-    return res.status(400).json({ success: false, error: "Usuario inválido" });
+  const emailExiste = usuarios.length > 0;
+  if (!emailExiste)
+    return res
+      .status(400)
+      .json({ success: false, error: "Usuario o contraseña incorrecta" });
 
   const usuario = usuarios[0];
   const passwordValida = await bcrypt.compare(password, usuario.password_hash);
@@ -19,24 +22,10 @@ export const login = async (req, res) => {
   if (!passwordValida)
     return res
       .status(400)
-      .json({ success: false, error: "Contraseña incorrecta" });
-
-  const [roles] = await db.execute(
-    `SELECT r.rol_name
-     FROM roles r
-     JOIN usuarios_roles ur ON r.id = ur.rol_id
-     WHERE ur.user_id=?`,
-    [usuario.id]
-  );
-
-  const rolesUsuario = roles.map((r) => r.rol_name);
-  const payload = {
-    userId: usuarios[0].id,
-    roles: rolesUsuario
-  }
+      .json({ success: false, error: "Usuario o contraseña incorrecta" });
 
   const token = jwt.sign( 
-    payload,
+    { id: usuario.id, email: usuario.email },
     process.env.JWT_SECRET,
     { expiresIn: "4h" }
   );
@@ -44,7 +33,8 @@ export const login = async (req, res) => {
   res.json({
     success: true,
     token,
-    username: usuario.username,
-    roles: rolesUsuario,
+    ID: usuario.id,
+    nombre: usuario.nombre,
+    email: usuario.email,
   });
 };

@@ -1,0 +1,60 @@
+@url=http://localhost:3000
+
+### login
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "jose123@gmail.com",
+  "password": "Tutifrutti007"
+}
+
+###
+@token = {{login.response.body.token}}
+
+###
+POST {{url}}/viajes/reservar
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "vehiculoId": 1,
+  "conductorId": 3,
+  "fecha_salida": "2025-11-09 10:50:00",
+  "fecha_llegada": "2025-11-09 11:30:00",
+  "origen": "ubicacion actual",
+  "destino": "Av. siempre viva N° 740",
+  "kilometros": 9,
+  "observaciones": "la casa de al lado del estupido flanders"
+}
+###
+GET {{url}}/viajes
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET {{url}}/viajes/2
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+PUT {{url}}/viajes/3
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "vehiculoId": 1,
+  "conductorId": 1,
+  "fecha_salida": "2025-11-09 20:50:00",
+  "fecha_llegada": "2025-11-09 22:30:00",
+  "origen": "ubicacion actual",
+  "destino": "Av. siempre viva N° 740",
+  "kilometros": 9,
+  "observaciones": "la casa de al lado del estupido flanders"
+}
+
+###
+DELETE {{url}}/viajes/6
+Content-Type: application/json
+Authorization: Bearer {{token}}

@@ -3,20 +3,14 @@ import bcrypt from "bcrypt";
 
 export const register = async (req, res) => {
   try {
-    const { username, nombre, password } = req.body;
+    const { nombre, email, password } = req.body;
     const password_hash = await bcrypt.hash(password, 12);
-
     const [result] = await db.execute(
-        "INSERT INTO usuarios (username, nombre, password_hash) VALUES (?, ?, ?)",
-        [username, nombre, password_hash]
+        "INSERT INTO usuarios (nombre, email, password_hash) VALUES (?, ?, ?)",
+        [nombre, email, password_hash]
     );
-    await db.execute(
-        "INSERT INTO usuarios_roles (user_id, rol_id) VALUES (?, ?)",
-        [result.insertId, 2]
-    );
-    res.status(201).json({success: true, data: {id: result.insertId, username, nombre, rol: "usuario"}});
+    res.status(201).json({success: true, data: {id: result.insertId, nombre, email}});
 
-    
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Error al registrar usuario" });
@@ -28,19 +22,14 @@ export const getUsuarios = async (req, res) => {
     const [usuarios] = await db.execute(
       `SELECT 
         u.id,
-        u.username,
-        u.nombre, 
-        r.rol_name AS rol 
-        FROM usuarios u 
-        JOIN usuarios_roles ur
-        ON ur.user_id = u.id
-        JOIN roles r
-        ON r.id = ur.rol_id`
+        u.nombre,
+        u.email
+      FROM usuarios u`
       );
     if (usuarios.length === 0) {
       return res.status(404).json({ success: false, message: "No hay usuarios registrados" });
     }
-    res.json({ success: true, data: usuarios });
+    res.status(200).json({ success: true, data: usuarios });
   } catch (error) {
     res.status(500).json({ success: false, message: "Error al obtener usuarios" });
   }
@@ -51,19 +40,14 @@ export const getUsuarioPorId = async (req, res) => {
     const [usuarios] = await db.execute(
       `SELECT 
         u.id,
-        u.username,
-        u.nombre, 
-        r.rol_name AS rol 
-        FROM usuarios u 
-        JOIN usuarios_roles ur
-        ON ur.user_id = u.id
-        JOIN roles r
-        ON r.id = ur.rol_id
+        u.nombre,
+        u.email
+      FROM usuarios u
         WHERE u.id = ?`, [id]);
     if (usuarios.length === 0) {
       return res.status(404).json({ success: false, message: "Usuario no encontrado" });
     }
-    res.json({ success: true, data: usuarios[0] });
+    res.status(200).json({ success: true, data: usuarios[0] });
   } catch (error) {
     res.status(500).json({ success: false, message: "Error al obtener usuario" });
   }
@@ -76,6 +60,7 @@ export const eliminarUsuario = async (req, res) => {
     if (result.affectedRows === 0) {
       return res.status(404).json({ success: false, message: "Usuario no encontrado" });
     }
+    res.status(200).json({ success: true, message: "Usuario eliminado correctamente"});
   } catch (error) {
     res.status(500).json({ success: false, message: "Error al eliminar usuario" });
   }
@@ -83,7 +68,7 @@ export const eliminarUsuario = async (req, res) => {
 
 export const actualizarUsuario = async (req, res) => {
   try {
-    const {id} = req.params.id;
+    const {id} = req.params;
     const {nombre, password} = req.body;
     const updates = [];
     const values = [];
@@ -103,7 +88,7 @@ export const actualizarUsuario = async (req, res) => {
     if (result.affectedRows === 0) {
       return res.status(404).json({ success: false, message: "Usuario no encontrado" });
     }
-    res.json({ success: true, message: "Usuario actualizado correctamente" });
+    res.status(200).json({ success: true, message: "Usuario actualizado correctamente" });
   } catch (error) {
     res.status(500).json({ success: false, message: "Error al actualizar usuario" });
   }
