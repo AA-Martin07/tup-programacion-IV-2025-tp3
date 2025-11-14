@@ -19,7 +19,6 @@ export const registrarConductor = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("❌ Error en registrarConductor:", error);
     res.status(500).json({ success: false, message: "Error al registrar conductor" });
   }
 };
@@ -102,3 +101,29 @@ export const actualizarConductor = async (req, res) => {
         res.status(500).json({ success: false, message: "Error al actualizar conductor" });
     }
 };
+
+export const historialConductor = async (req, res) =>{
+    try {
+        const {id} = req.params;
+        const [historial] = await db.execute(
+            `SELECT
+                c.id AS conductor_id,
+                c.nombre,
+                c.apellido,
+                c.dni,
+                c.licencia,
+                c.vencimiento_licencia,
+                COUNT(vi.id) AS cantidad_viajes
+                FROM conductores c
+                LEFT JOIN viajes vi ON vi.conductor_Id = c.id
+                WHERE c.id = ?
+                GROUP BY c.id`
+        ,[id]);
+        if (historial.length === 0) {
+            return res.status(404).json({ success: false, message: `No se encontró historial para el conductor ID:${id}` });
+        }
+        res.status(200).json({ success: true, data: historial[0] });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error al obtener historial de viajes del conductor" });
+    }
+}

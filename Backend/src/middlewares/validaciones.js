@@ -34,7 +34,7 @@ export const validarVehiculo = [
 export const validarConductor = [
   body("nombre", "Nombre inválido").notEmpty().isString().isLength({ max: 45 }).trim(),
   body("apellido", "Apellido inválido").notEmpty().isString().isLength({ max: 45 }).trim(),
-  body("dni", "DNI inválido").notEmpty().isString().isLength({ min: 7, max: 8 }).trim().custom(
+  body("dni", "DNI inválido").notEmpty().isLength({ min: 7, max: 8 }).trim().custom(
     async (value, { req }) =>{
       const {id} = req.params;
       const [rows] = await db.execute("SELECT id FROM conductores WHERE dni = ?", [value]);

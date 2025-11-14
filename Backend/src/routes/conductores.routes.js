@@ -1,7 +1,7 @@
 import express from "express";
 import { verificarAutenticacion } from "../middlewares/auth.middleware.js";
 import { verificarValidaciones, validarId, validarConductor } from "../middlewares/validaciones.js";
-import { registrarConductor, getConductores, getConductorPorId, eliminarConductor, actualizarConductor } from "../controllers/conductores.controller.js";
+import { registrarConductor, getConductores, getConductorPorId, eliminarConductor, actualizarConductor, historialConductor } from "../controllers/conductores.controller.js";
 
 const router = express.Router();
 
@@ -25,6 +25,14 @@ router.get(
     validarId,
     verificarValidaciones,
     getConductorPorId
+);
+
+router.get(
+    "/historial/:id",
+    verificarAutenticacion,
+    validarId,
+    verificarValidaciones,
+    historialConductor
 );
 
 router.delete(

@@ -47,7 +47,7 @@ router.delete(
 );
 
 router.put(
-    "/:id",
+    "/editar/:id",
     verificarAutenticacion,
     validarId,
     validarVehiculo,

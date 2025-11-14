@@ -1,11 +1,11 @@
 @url=http://localhost:3000
 
-POST {{url}}/usuarios
+POST {{url}}/usuarios/registro
 Content-Type: application/json
 
 {
-  "nombre": "jose",
-  "email": "jose123@gmail.com",
+  "nombre": "jese rodriguez",
+  "email": "jesee@gmail.com",
   "password": "Tutifrutti007"
 }
 ### login
@@ -14,7 +14,7 @@ POST {{url}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "jose123@gmail.com",
+  "email": "jesee@gmail.com",
   "password": "Tutifrutti007"
 }
 

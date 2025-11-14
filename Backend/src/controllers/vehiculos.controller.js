@@ -21,7 +21,7 @@ export const getVehiculos = async (req, res) => {
         if (vehiculos.length === 0) {
             return res.status(404).json({ success: false, message: "No hay vehículos registrados" });
         }
-        res.status(201).json({ success: true, data: vehiculos });
+        res.status(200).json({ success: true, data: vehiculos });
     } catch (error) {
         res.status(500).json({ success: false, message: "Error al obtener vehículos" });
     }
@@ -34,7 +34,7 @@ export const getVehiculoPorId = async (req, res) => {
         if (vehiculos.length === 0) {
             return res.status(404).json({ success: false, message: "Vehículo no encontrado" });
         }
-        res.status(201).json({ success: true, data: vehiculos[0] });
+        res.status(200).json({ success: true, data: vehiculos[0] });
     } catch (error) {
         res.status(500).json({ success: false, message: "Error al obtener vehículo" });
     }
@@ -47,7 +47,7 @@ export const eliminarVehiculo = async (req, res) => {
         if (result.affectedRows === 0) {
             return res.status(404).json({ success: false, message: "Vehículo no encontrado" });
         }
-        res.status(201).json({ success: true, message: "Vehículo eliminado correctamente"});
+        res.status(200).json({ success: true });
     } catch (error) {
         res.status(500).json({ success: false, message: "Error al eliminar vehículo" });
     }
@@ -106,7 +106,6 @@ export const historialVehiculo = async (req, res) => {
                 v.año,
                 v.capacidad,
                 SUM(vi.kilometros) AS kilometros_totales,
-                COUNT(vi.id) AS cantidad_viajes
                 FROM vehiculos v
                 JOIN viajes vi ON vi.vehiculo_id = v.id
                 GROUP BY v.id`
@@ -114,7 +113,7 @@ export const historialVehiculo = async (req, res) => {
         if (historial.length === 0) {
             return res.status(404).json({ success: false, message: "No se encontró historial de viajes" });
         }
-        res.status(201).json({ success: true, data: historial });
+        res.status(200).json({ success: true, data: historial });
     } catch (error) {
         res.status(500).json({ success: false, message: "Error al obtener historial del vehículo" });
     }
@@ -122,7 +121,7 @@ export const historialVehiculo = async (req, res) => {
 
 export const historialVehiculoPorId = async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const [historial] = await db.execute(
             `SELECT
                 v.id AS vehiculo_id,
@@ -131,18 +130,25 @@ export const historialVehiculoPorId = async (req, res) => {
                 v.patente,
                 v.año,
                 v.capacidad,
-                SUM(vi.kilometros) AS kilometros_totales,
-                COUNT(vi.id) AS cantidad_viajes
-                FROM vehiculos v
-                JOIN viajes vi ON vi.vehiculo_id = v.id
-                WHERE v.id = ?
-                GROUP BY v.id`
-        ,[id]);
+                SUM(vi.kilometros) AS kilometros_totales
+            FROM vehiculos v
+            JOIN viajes vi ON vi.vehiculo_id = v.id
+            WHERE v.id = ?
+            GROUP BY v.id`,
+            [id]
+        );
         if (historial.length === 0) {
-            return res.status(404).json({ success: false, message: "No se encontró historial para el vehículo" });
+            return res.status(404).json({
+                success: false,
+                message: "No se encontró historial para el vehículo",
+            });
         }
-        res.status(201).json({ success: true, data: historial });
+        res.status(200).json({ success: true, data: historial[0] });
     } catch (error) {
-        res.status(500).json({ success: false, message: "Error al obtener historial del vehículo" });
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Error al obtener historial del vehículo",
+        });
     }
 };

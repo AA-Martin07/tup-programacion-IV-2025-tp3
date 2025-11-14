@@ -8,7 +8,7 @@ import { verificarAutenticacion } from "../middlewares/auth.middleware.js";
 const router = express.Router();
 
 router.post(
-  "/",
+  "/registro",
   body("nombre", "Nombre inválido").notEmpty().isString().isLength({ max: 50 }).trim(),
   body("email", "email invalido")
   .isEmail()

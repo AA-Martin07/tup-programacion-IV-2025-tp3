@@ -38,7 +38,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ###
-PUT {{url}}/conductores/2
+PUT {{url}}/conductores/editar/7
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -52,5 +52,10 @@ Authorization: Bearer {{token}}
 
 ###
 DELETE {{url}}/conductores/3
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET {{url}}/conductores/historial/1
 Content-Type: application/json
 Authorization: Bearer {{token}}

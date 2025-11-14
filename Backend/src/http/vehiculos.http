@@ -38,7 +38,7 @@ Authorization: Bearer {{token}}
 
 
 ###
-PUT {{url}}/vehiculos/1
+PUT {{url}}/vehiculos/editar/1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -51,6 +51,6 @@ Authorization: Bearer {{token}}
 }
 
 ###
-GET {{url}}/vehiculos/historial
+GET {{url}}/vehiculos/historial/1
 Content-Type: application/json
 Authorization: Bearer {{token}}
