@@ -43,7 +43,7 @@ export const Ingresar = () => {
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  correo
+                  Correo
                 </label>
                 <input
                   id="email"

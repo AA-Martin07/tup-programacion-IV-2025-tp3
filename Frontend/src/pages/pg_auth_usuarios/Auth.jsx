@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { Link } from "react-router";
 
 const AuthContext = createContext(null);
 
@@ -115,7 +116,20 @@ export const AuthPage = ({ children }) => {
   const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
-    return <h2 className="text-center text-red-600 mt-6">Ingrese para ver esta página</h2>;
+    return (
+      <section className="min-h-screen flex items-center justify-center ">
+        <div className="max-w-xs w-full bg-white p-6 rounded-lg shadow text-center">
+          <h2 className="text-red-600 mb-4">Ingrese para ver esta página</h2>
+
+          <Link
+            to="/"
+            className="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+          >
+            Volver a Home
+          </Link>
+        </div>
+      </section>
+    );
   }
 
   return children;

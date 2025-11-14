@@ -1,11 +1,14 @@
-import { Outlet, Link } from "react-router";
+import { Outlet, Link, useLocation } from "react-router";
 import { useAuth } from "./Auth.jsx";
 import { Ingresar } from "./Ingresar.jsx";
 import { Registrar } from "./Registrar.jsx";
+import { Home } from "./Home.jsx";
 
 export const Layout = () => {
   const { isAuthenticated, logout } = useAuth();
+  const location = useLocation()
 
+  const inHome = location.pathname === '/'
   return (
     <main className="bg-blue-200 text-lg">
       <nav className="fixed w-full z-20 top-0 start-0 shadow-2xl font-medium">
@@ -41,6 +44,8 @@ export const Layout = () => {
       </nav>
       <div className="pt-20 min-h-screen">
         <Outlet />
+
+        {inHome && <Home/>}
       </div>
 
     </main>

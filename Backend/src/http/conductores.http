@@ -38,14 +38,14 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ###
-PUT {{url}}/conductores/editar/7
+PUT {{url}}/conductores/9
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
   "nombre": "cacho",
   "apellido": "jeager",
-  "dni": "40345678",
+  "dni": 40345678,
   "licencia": "LNC-42892834",
   "vencimiento_licencia": "2027-01-03"
 }
