@@ -57,9 +57,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (nombre, email, password) => {
-    setError(null)
-    try {
-      const response = await fetch("http://localhost:3000/usuarios/registro",{
+  setError(null);
+  try {
+    const response = await fetch("http://localhost:3000/usuarios/registro", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ nombre, email, password }),
@@ -71,20 +71,16 @@ export const AuthProvider = ({ children }) => {
       setError(session.error || "Error al registrarse");
       return { success: false };
     }
-    if (session.success) {
-      setToken(session.token);
-      setEmail(session.email);
-      localStorage.setItem("token", session.token);
-      localStorage.setItem("email", session.email);
-      setError(null);
-      return { success: true };
-    }
-    }catch (err) {
-      setError("Error del servidor. Intente nuevamente.");
-        return { success: false };
-    }
 
-  }
+    const loginResult = await login(email, password)
+    return loginResult
+
+  } catch (err) {
+      setError("Error del servidor. Intente nuevamente.");
+      return { success: false };
+    }
+  };
+
   const fetchAuth = async (url, options = {}) => {
     if (!token) throw new Error("No está iniciada la sesión");
 

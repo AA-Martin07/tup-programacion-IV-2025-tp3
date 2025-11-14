@@ -7,7 +7,7 @@ export const Home = () => {
 
   return (
     <section className="min-h-scree p-8">
-      <div className="max-w-xs w-full grid grid-cols-2 gap-6">
+      <div className="max-w-xs w-full grid grid-cols-1 gap-6">
         <div className="bg-white p-6 rounded-lg shadow">
             <h2 className="text-2xl font-bold mb-4">TPN°3</h2>
             <p className="text-gray-700 mb-3"> Esta es una página diseñada para solicitar viajes.</p>
