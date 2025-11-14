@@ -9,9 +9,12 @@ import { Usuarios } from "./pages/pg_auth_usuarios/Usuarios.jsx"
 import { Vehiculos } from "./pages/Pg_vehiculos/Vehiculos.jsx"
 import { AgregarVehiculo } from "./pages/Pg_vehiculos/AgregarVehiculo.jsx"
 import { EditarVehiculo } from "./pages/Pg_vehiculos/EditarVehiculo.jsx"
+import { HistorialVehiculo } from './pages/Pg_vehiculos/HistorialVehiculo.jsx'
 //conductores
 import { Conductores } from './pages/Pg_conductores/Conductores.jsx'
 import { AgregarConductor } from './pages/Pg_conductores/AgregarConductor.jsx'
+import { EditarConductor } from './pages/Pg_conductores/EditarConductor.jsx'
+import { HistorialConductor } from './pages/Pg_conductores/HistorialConductor.jsx'
 //viajes
 import { Viajes } from './pages/pg_viajes/Viajes.jsx'
 import { SolicitarViaje } from './pages/pg_viajes/SolicitarViaje.jsx'
@@ -55,6 +58,13 @@ createRoot(document.getElementById('root')).render(
                   <EditarVehiculo/>
                 </AuthPage>
               }/>
+              <Route
+              path='vehiculos/historial/:id'
+              element={
+                <AuthPage>
+                  <HistorialVehiculo/>
+                </AuthPage>
+              }/>
 
             <Route
               path='conductores'
@@ -65,10 +75,26 @@ createRoot(document.getElementById('root')).render(
               }
             />
             <Route
+              path='conductores/:id'
+              element={
+                <AuthPage>
+                  <EditarConductor/>
+                </AuthPage>
+              }
+            />
+            <Route
               path='conductores/registro'
               element={
                 <AuthPage>
                   <AgregarConductor/>
+                </AuthPage>
+              }
+            />
+            <Route
+              path='conductores/historial/:id'
+              element={
+                <AuthPage>
+                  <HistorialConductor/>
                 </AuthPage>
               }
             />

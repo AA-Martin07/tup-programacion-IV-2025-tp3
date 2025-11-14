@@ -18,7 +18,18 @@ export function Viajes() {
       setError(err.message);
     }
   };
-
+  const eliminarVIaje = async (id) =>{
+    if (window.confirm("Desea eliminar este viaje?")) {
+      const res = await fetchAuth(`http://localhost:3000/viajes/${id}`,{
+          method: "DELETE"
+      })
+      const data = await res.json()
+      if (!res.ok || !data.success) {
+          return window.alert("Error al eliminar el vehiculo");
+      }
+      cargarViajes()
+    }
+  }
     useEffect(() => {
     cargarViajes();
     }, []);
@@ -60,7 +71,7 @@ export function Viajes() {
                 <td className="flex-1 space-x-1.5">
                     <button 
                         className="bg-red-600 text-white px-3  rounded hover:bg-red-700 transition"
-                        onClick={() => eliminarViaje(v.id)}>X
+                        onClick={() => eliminarVIaje(v.id)}>X
                     </button>
                     <button>
                       <Link

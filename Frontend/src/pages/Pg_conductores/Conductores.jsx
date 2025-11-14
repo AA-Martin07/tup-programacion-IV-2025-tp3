@@ -64,18 +64,18 @@ export function Conductores() {
                 <td className="py-2 px-4">{c.dni}</td>
                 <td className="py-2 px-4">{c.licencia}</td>
                 <td className="py-2 px-4">{c.vencimiento_licencia}</td>
-                <td className="flex-1">
+                <td className="flex-1 space-x-1.5">
                     <button 
                         className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
                         onClick={() => eliminarConductor(c.id)}>X
                     </button>
                     <Link
-                        to={`/conductor/editar/${c.id}`}
+                        to={`/conductores/${c.id}`}
                         className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
                         >editar
                     </Link>
                     <Link
-                        to={`/conductor/historial/${c.id}`}
+                        to={`/conductores/historial/${c.id}`}
                         className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
                         >historial
                     </Link>

@@ -64,7 +64,7 @@ export function Vehiculos() {
                 <td className="py-2 px-4">{v.patente}</td>
                 <td className="py-2 px-4">{v.año}</td>
                 <td className="py-2 px-4">{v.capacidad}</td>
-                <td className="flex-1">
+                <td className="flex-1 space-x-1.5">
                     <button 
                         className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
                         onClick={() => eliminarVehiculo(v.id)}>X
@@ -72,7 +72,7 @@ export function Vehiculos() {
                     <Link
                         to={`/vehiculos/editar/${v.id}`}
                         className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
-                        >edit
+                        >editar
                     </Link>
                     <Link
                         to={`/vehiculos/historial/${v.id}`}
